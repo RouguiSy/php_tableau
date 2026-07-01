@@ -134,3 +134,25 @@
     }else {
         echo "la categorie n'existe pas";
     }
+
+    $produits = [];
+    do {
+        $produit = [
+                    "nom"=>$nomPro,
+                    "reference"=>$reference,
+                    "qte"=>$qte,
+                    "prix"=>$prix
+                ];
+    $produits[]= $produit;
+
+    $choix = strtolower(readline(" voulez vous continuer  o/n "));
+    
+    } while ($choix === "oui");
+
+    $categorie  =   [
+            "code" => $code,
+            "nom" => $nom,
+            "produits" =>  $produits 
+        ];
+
+    $categories[] = $categorie;
