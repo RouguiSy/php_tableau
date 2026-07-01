@@ -83,32 +83,66 @@
     // question 4
     function ajouterProduit(array &$categories): void {
 
-    $code = saisieChaine("Code de la categorie : ");
+        $code = saisieChaine("Code de la categorie : "); 
+        $index = rechercheCategorieParCle($categories, "code", $code);
+        if ($index === false) {
+            echo "Categorie introuvable \n";
+            return;
+        }
+        $nom = saisieChaine("Nom du produit : ");
+        if (!champObligatoire($nom, "nom obligatoire")) return;
+        $reference = saisieChaine("Reference : ");
+        if (!champObligatoire($reference, "reference obligatoire")) return;
+        $prix = saisieChaine("Prix : ");
+        if (!champObligatoire($prix, "prix obligatoire")) return;
+        $qte = saisieChaine("qte : ");
+        if (!champObligatoire($qte, "Quantite obligatoire")) return;
+        $categories[$index]["produits"][] = [
+            "nom" => $nom,
+            "reference" => $reference,
+            "prix" => $prix,
+            "qte" => $qte
+        ];
 
-    $index = rechercheCategorieParCle($categories, "code", $code);
-
-    if ($index === false) {
-        echo "Categorie introuvable \n";
-        return;
     }
 
-    $nom = saisieChaine("Nom du produit : ");
-    if (!champObligatoire($nom, "nom obligatoire")) return;
+    // question 5
 
-    $reference = saisieChaine("Reference : ");
-    if (!champObligatoire($reference, "reference obligatoire")) return;
+    function ajouterCategorieAvecProduits(array &$categories): void {
 
-    $prix = saisieChaine("Prix : ");
-    if (!champObligatoire($prix, "prix obligatoire")) return;
+        $code = saisieChaine("Code de la categorie : ");
+        if (!champObligatoire($code, "code obligatoire")) return;
 
-    $quantite = saisieChaine("Quantite : ");
-    if (!champObligatoire($quantite, "quantite obligatoire")) return;
+        $nom  = saisieChaine("Nom de la cat gorie : ");
+        if (!champObligatoire($nom, "nom obligatoire")) return;
 
-    $categories[$index]["produits"][] = [
-        "nom" => $nom,
-        "reference" => $reference,
-        "prix" => $prix,
-        "quantite" => $quantite
-    ];
+        $produits = [];
+
+        do {
+
+            $nomPro = saisieChaine("Nom produit : ");
+            if (!champObligatoire($nomPro, "nom obligatoire")) return;
+            $reference = saisieChaine("Reference : ");
+            if (!champObligatoire($reference, "reference obligatoire")) return;
+            $qte = saisieChaine("Quantite : ");
+            if (!champObligatoire($qte, "quantite obligatoire")) return;
+            $prix = saisieChaine("Prix : ");
+            if (!champObligatoire($prix, "prix obligatoire")) return;
+            $produits[] = [
+                "nom" => $nomPro,
+                "reference" => $reference,
+                "quantite" => $qte,
+                "prix" => $prix
+            ];
+            $choix = strtolower(readline("Ajouter un autre produit ? (o/n) : "));
+
+        } while ($choix === "o");
+
+        $categories[] = [
+            "code" => $code,
+            "nom" => $nom,
+            "produits" => $produits
+        ];
 
 }
+    ajouterCategorieAvecProduits($categories);
