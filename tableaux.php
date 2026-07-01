@@ -78,4 +78,37 @@
     echo "Categorie ajoutee avec succes \n";
 
     
+    }
+
+    // question 4
+    function ajouterProduit(array &$categories): void {
+
+    $code = saisieChaine("Code de la categorie : ");
+
+    $index = rechercheCategorieParCle($categories, "code", $code);
+
+    if ($index === false) {
+        echo "Categorie introuvable \n";
+        return;
+    }
+
+    $nom = saisieChaine("Nom du produit : ");
+    if (!champObligatoire($nom, "nom obligatoire")) return;
+
+    $reference = saisieChaine("Reference : ");
+    if (!champObligatoire($reference, "reference obligatoire")) return;
+
+    $prix = saisieChaine("Prix : ");
+    if (!champObligatoire($prix, "prix obligatoire")) return;
+
+    $quantite = saisieChaine("Quantite : ");
+    if (!champObligatoire($quantite, "quantite obligatoire")) return;
+
+    $categories[$index]["produits"][] = [
+        "nom" => $nom,
+        "reference" => $reference,
+        "prix" => $prix,
+        "quantite" => $quantite
+    ];
+
 }
